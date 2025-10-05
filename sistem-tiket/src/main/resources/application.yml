@@ -1,1 +1,49 @@
 # Konfigurasi Aplikasi Sistem Tiket
+# File ini berisi pengaturan dasar untuk menjalankan aplikasi
+
+# ===== KONFIGURASI SERVER =====
+# Pengaturan server web Spring Boot
+server:
+  port: 5000  # Port untuk Replit environment (wajib 5000)
+  servlet:
+    context-path: /  # Path dasar aplikasi
+
+# ===== KONFIGURASI SPRING APPLICATION =====
+# Identitas aplikasi Spring Boot
+spring:
+  application:
+    name: sistem-tiket  # Nama aplikasi
+
+  # ===== KONFIGURASI DATABASE (MySQL) =====
+  # Pengaturan koneksi ke database MySQL
+  # Kompatibel dengan XAMPP MySQL dan Docker MySQL
+  datasource:
+    url: jdbc:mysql://localhost:3306/sistem_tiket?useSSL=false&serverTimezone=Asia/Jakarta
+    username: root  # Username MySQL (default XAMPP)
+    password: root  # Password MySQL (gunakan "root" atau kosongkan sesuai setup XAMPP/Docker Anda)
+    driver-class-name: com.mysql.cj.jdbc.Driver  # Driver MySQL 8.x
+
+  # ===== KONFIGURASI JPA/HIBERNATE =====
+  # Pengaturan ORM (Object Relational Mapping)
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Gunakan 'validate' karena schema dikelola oleh Flyway
+    show-sql: true  # Tampilkan query SQL di console (berguna untuk belajar dan debugging)
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect  # Dialect untuk MySQL 8
+        format_sql: true  # Format SQL agar mudah dibaca di console
+
+  # ===== KONFIGURASI FLYWAY =====
+  # Database migration tool untuk mengelola perubahan schema
+  flyway:
+    enabled: true  # Aktifkan Flyway
+    locations: classpath:db/migrasi  # Lokasi file migrasi SQL
+    baseline-on-migrate: true  # Buat baseline otomatis jika database sudah ada
+
+# ===== KONFIGURASI LOGGING =====
+# Pengaturan level log untuk monitoring dan debugging
+logging:
+  level:
+    com.tiket: DEBUG  # Log detail untuk package aplikasi kita
+    org.springframework.web: INFO  # Log standar untuk Spring Web
