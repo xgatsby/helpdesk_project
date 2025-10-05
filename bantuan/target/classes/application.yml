@@ -1,0 +1,59 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: sistem-bantuan
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sistem_bantuan
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        show_sql: false
+    show-sql: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    database: 0
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+jwt:
+  secret: rahasia-jwt-ubah-di-produksi
+  expiration: 86400000
+
+penugasan:
+  strategi: BERDASARKAN_BEBAN_KERJA
+
+sla:
+  pemantauan:
+    aktif: true
+    cron: "0 */5 * * * *"
+  ambang:
+    peringatan: 75
+    kritis: 90
+    lewat_waktu: 100
+
+logging:
+  level:
+    com.bantuan: DEBUG
+    org.springframework.security: INFO
